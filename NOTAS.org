@@ -95,6 +95,50 @@ Por padrão é possível passar a flag ~--onefile~ para definir
 que eu quero que todas as bibliotecas (DLLs) e outros arquivos
 sejam encapsulados num único executável /standalone/.
 
+No caso, finalmente vai ficar:
+
+#+BEGIN_SRC shell
+  pyinstaller --onefile --noconsole myapplication.py
+
+#+END_SRC
+
 * Design da aplicação
 
 Estarei usando o Qt Designer pra criar o design da aplicação.
+
+* Bugs
+
+** Windows 7 e Pyinstaller
+
+Se eu tentar executar a aplicação no Windows 7 receberei um erro
+relacionado a: api-ms-win-crt-runtime-l1-1-0.dll faltando na máquina.
+
+Entre os desenvolvedores do Pyinstaller, alguém recomendou instalar
+uma atualização no Windows 7 da máquina  alvo referente a esse problema.
+https://github.com/pyinstaller/pyinstaller/issues/1588
+
+Pode ser encontrado aqui: [[https://www.microsoft.com/en-US/download/details.aspx?id%3D48145][VC 2015 Redistributable]]
+
+Como solução alternativa, por outro lado, pode ser visto isto:
+
+#+BEGIN_EXAMPLE
+The following solved the problem for me (on Win10 v1607 - PyQt5 App):
+
+Add the directory of the required dlls to system Path. My application uses PyQt5 which is dependent on api-ms-win dlls.
+
+    For PyQt5 add this directory: %WHERE EVER YOU INSTALLED PYTHON%\Lib\site-packages\PyQt5\Qt\bin
+
+    For api-ms-win dlls you need Visual Studio 2015 OR Windows SDK (download here):
+    Directory if you have Visual Studio: C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Remote Debugger\x64
+    Directory if you have Windows SDK: C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64
+
+After you add the required paths, pyinstaller can find the files.
+#+END_EXAMPLE
+
+Isto é, na minha máquina, se eu tiver instalado o Windows SDK Kit, adicionado
+no PATH do sistema:
+~C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64~
+
+Eu posso corrigir o problema gerando um nova aplicação pelo
+pyinstaller pois dessa vez ele encontrará as DLLs necessárias
+e será incluída na aplicação final.
