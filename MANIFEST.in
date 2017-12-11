@@ -1,0 +1,6 @@
+include LICENSE
+include requirements.txt
+include README.md
+include CHANGELOG
+recursive-include rentalcar *.ui
+exclude MANIFEST.in
