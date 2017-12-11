@@ -9,7 +9,7 @@
 
 import sys
 from PyQt5 import QtWidgets
-from GUI.MainWindow import Ui_MainWindow
+from rentalcar.GUI.MainWindow import Ui_MainWindow
 
 app = QtWidgets.QApplication(sys.argv)
 window = QtWidgets.QMainWindow()
