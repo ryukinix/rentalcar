@@ -1,4 +1,4 @@
-PYTHON = python3
+PYTHON = python
 INSTALL = install
 DEVELOP = develop
 TARGET = setup.py
@@ -101,12 +101,10 @@ register:
 
 
 pyinstaller:
-	@make check
 	@echo "+===============+"
 	@echo "|   PYINSTALLER |"
 	@echo "+===============+"
-	$(PYTHON) -m pyinstaller $(PYNSTALLER_ARGS) $(PROJECT)
-
+	$(PYTHON) build.py
 
 help:
 	@echo "+=============================================+"
@@ -147,4 +145,3 @@ help:
 
 
 .PHONY = all check clean-environment clean-build clean install build develop test-register develop-uninstall test-deploy deploy register help
- 
