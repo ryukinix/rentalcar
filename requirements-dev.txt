@@ -1,0 +1,3 @@
+-r requirements.txt
+pyqt5-tools
+pyinstaller
