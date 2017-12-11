@@ -1,0 +1,100 @@
+#+AUTHOR: Manoel Vilela
+#+OPTIONS: toc:nil hideall
+
+* Instalação do Ambiente
+Python: Python3.6.1
+Sistema operacional: Windows 10 e Arch Linux.
+Qt: 5.9.1
+
+O uso do sistema Windows, embora não seja o meu ambiente mais familiar
+para desenvolvimento (uso mais Linux), estou fazendo porque minha
+intenção é desenvolver uma aplicação cross-plataform e eu tenho
+mais problemas de deixar uma aplicação em Python funcionar no Windows
+sem OS-only dependências que o contrário.
+
+Visto que enquanto o Python já é instalado por padrão no Linux, tal
+como também o seu gerenciador de pacotes ~pip~, isso não acontece no
+Windows. Dessa maneira estarei usando técnicas para criar uma
+aplicação cross-platform que seja de fácil uso para um usuário
+não-técnico.
+
+A primeira coisa a definir é que estarei usando um framework de
+interfaces gráfica cross-platform na licença comunitária: Qt.
+
+O uso de PyInstaller se deve pela necessidade de distribuir a
+aplicação Python sem a necessidade que o usuário tenha a preocupação
+de preparar seu ambiente com as dependências necessárias pro projeto.
+Isto é, já faço o /deploy/ de um executável com todas as dependências
+necessárias assim como a máquina virtual de Python. A aplicação
+pode ter dessa maneira um consumo maior espaço como /tradeoff/,
+mas é compensado pela facilidade
+
+** Qt
+Precisei de  PyQt5 e pyqt5-tools:
+
+#+BEGIN_SRC shell
+pip install pyqt5 pyqt5-tools
+#+END_SRC
+
+
+Ambos estão definidos pra ser usados com Qt 5.9.1.
+
+O pyqt5-tools é instalado para poder usar o Qt Designer incluido na
+aplicação em site-packages/pyqt5-tools/designer.exe.
+
+** Pyinstaller
+
+Estou com problemas em relação ao Pyinstaller usando pip no windows, a instalação
+simplesmente congela durante a instalação via pip. Parece que há um
+problema relacionado ao pywin32. Vou dar uma olhada no que pode ser.
+A propósito, o que estou fazendo é:
+
+#+BEGIN_SRC shell
+pip install pyinstaller
+#+END_SRC
+
+Na documentação do pyinstaller disponível no readthedocs é possível
+encontrar uma entrada sobre isso: [[https://pyinstaller.readthedocs.io/en/stable/requirements.html#windows][ReadTheDocs/Pyinstaller#Windows]]
+
+
+A documentação referencia que posso encontrar e baixar a última build
+do pywin32 manualmente se for necessário.  Instalei a versão para
+Python3.6 build 221 via [[https://sourceforge.net/projects/pywin32/files/pywin32/Build%2520221/pywin32-221.win-amd64-py3.6.exe/download][SourceForge]].
+
+
+Após isso, tentei reinstallar pyinstaller pelo pip.
+Aliás, minha antiga instalação estava congelada no pywin32,
+eu apenas pressionei C-c, a instalação continou e completou com
+sucesso. Recomendo instalar, por outro lado, antes manualmente
+o pywin32 então o ~pyinstaller~ pelo pip.
+
+Após instalado o ~pyinstaller~ corretamente fiz alguns testes.
+
+#+BEGIN_SRC shell
+  pyinstaller myapplication.py
+#+END_SRC
+
+Após isso é distribuído uma pasta chamada ~dist/~
+essa é a distribuição do software pra ser compartilhado com
+seu alvo. O pyinstaller possui vários parâmetros,
+alguns úteis podem ser conferidos a seguir.
+
+Para executar a janela sem o console é necessário que seja
+passado o parâmetro ~--windowed~ quando for executar
+sua aplicação já compilada como:  ~dist/myapplication.exe --windowed~
+
+Isso pode ser um pouco incomodo se você estiver desenvolvendo uma
+aplicação que só faz sentido em modo janela, então para o caso que eu
+quiser esse comportamento por padrão, posso simplesmente passar
+~--noconsole~ pro pyinstaller quando for chamado o ~pyinstaller~.
+
+Eu posso passar um favicon por ~--icon=app.ico~
+e também gerar uma aplicação com um ícone customizado.
+
+Por padrão é possível passar a flag ~--onefile~ para definir
+que eu quero que todas as bibliotecas (DLLs) e outros arquivos
+sejam encapsulados num único executável /standalone/.
+
+* Design da aplicação
+
+Estarei usando o Qt Designer pra criar o design da aplicação.
