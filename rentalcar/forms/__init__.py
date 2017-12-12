@@ -7,4 +7,9 @@
 #
 #
 
-from rentalcar.forms.MainWindow import Ui_MainWindow
+from .MainWindow import Ui_MainWindow
+from .AboutDialog import Ui_AboutDialog
+from .AddWidget import Ui_AddWidget
+from .FetchWidget import Ui_FetchWidget
+from .RentWidget import Ui_RentWidget
+from .DeleteWidget import Ui_DeleteWidget
