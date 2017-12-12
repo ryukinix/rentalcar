@@ -18,6 +18,7 @@ from rentalcar import models
 from datetime import datetime
 
 
+
 class Add(QtWidgets.QWidget):
     def __init__(self, parent):
         super().__init__()
@@ -85,7 +86,7 @@ class Fetch(QtWidgets.QWidget):
     def setupUi(self):
         self.ui.sairButton.clicked.connect(self.sair_button)
         self.ui.detalhesButton.clicked.connect(self.detalhes_button)
-        self.model = QStandardItemModel(0, 3, self)
+        self.model = QStandardItemModel(0, 3, self.parent)
         self.model.setHeaderData(self.CODE, Qt.Horizontal, "Código")
         self.model.setHeaderData(self.MODELO, Qt.Horizontal, "Modelo")
         self.model.setHeaderData(self.STATUS, Qt.Horizontal, "Status")
@@ -101,15 +102,16 @@ class Fetch(QtWidgets.QWidget):
         self.fetch()
 
     def fetch(self):
-        #self.model.clear()
-        self.model.insertRow(0)
+        self.model.removeRows(0, self.model.rowCount())
         for v in models.RentVehicle.objects:
+            self.model.insertRow(0)
             code = v.code
             status = v.status
             model = v.model
-            self.model.setData(model.index(0, self.CODE), code)
-            self.model.setData(model.index(0, self.MODELO), model)
-            self.model.setData(model.index(0, self.STATUS), status)
+            self.model.setData(self.model.index(0, self.CODE), code)
+            self.model.setData(self.model.index(0, self.MODELO), model)
+            self.model.setData(self.model.index(0, self.STATUS), status)
+
 
 
 
