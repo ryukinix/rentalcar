@@ -62,14 +62,52 @@ class Add(QtWidgets.QWidget):
         pass
 
 class Delete(QtWidgets.QWidget):
+
+    CODE, MODELO, MARCA = range(3)
+
     def __init__(self, parent):
         super().__init__()
         self.ui = forms.Ui_DeleteWidget()
         self.ui.setupUi(self)
         self.parent = parent
+        self.setupUi()
+
+    def setupUi(self):
+        self.ui.sairButton.clicked.connect(self.sair_button)
+        self.ui.excluirButton.clicked.connect(self.excluir_button)
+        self.model = QStandardItemModel(0, 3, self.parent)
+        self.model.setHeaderData(self.CODE, Qt.Horizontal, "Código")
+        self.model.setHeaderData(self.MODELO, Qt.Horizontal, "Modelo")
+        self.model.setHeaderData(self.MARCA, Qt.Horizontal, "Marca")
+        self.ui.treeView.setModel(self.model)
+
+    def excluir_button(self):
+        selected = self.ui.treeView.selectedIndexes()
+        if len(selected) > 0:
+            index = self.ui.treeView.selectedIndexes()[0]
+            item = index.model().itemFromIndex(index)
+            index = self.model.index(item.row(), self.CODE)
+            code = self.model.data(index)
+            v = models.RentVehicle.delete(code)
+        self.fetch()
+
+    def sair_button(self):
+        self.parent.focus()
 
     def update(self):
-        pass
+        self.fetch()
+
+    def fetch(self):
+        self.model.removeRows(0, self.model.rowCount())
+        for v in (x for x in models.RentVehicle.objects if len(x.clients) == 0):
+            self.model.insertRow(0)
+            code = v.code
+            model = v.model
+            brand = v.brand
+            self.model.setData(self.model.index(0, self.CODE), code)
+            self.model.setData(self.model.index(0, self.MODELO), model)
+            self.model.setData(self.model.index(0, self.MARCA), brand)
+
 
 
 class Fetch(QtWidgets.QWidget):
@@ -93,7 +131,14 @@ class Fetch(QtWidgets.QWidget):
         self.ui.treeView.setModel(self.model)
 
     def detalhes_button(self):
-        pass
+        selected = self.ui.treeView.selectedIndexes()
+        if len(selected) > 0:
+            index = self.ui.treeView.selectedIndexes()[0]
+            item = index.model().itemFromIndex(index)
+            index = self.model.index(item.row(), self.CODE)
+            code = self.model.data(index)
+            v = models.RentVehicle.search(code)
+            print(v)
 
     def sair_button(self):
         self.parent.focus()
