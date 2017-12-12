@@ -7,15 +7,7 @@
 #
 #
 
-import sys
-from PyQt5 import QtWidgets
-from rentalcar.GUI.MainWindow import Ui_MainWindow
-
-app = QtWidgets.QApplication(sys.argv)
-window = QtWidgets.QMainWindow()
-ui = Ui_MainWindow()
-ui.setupUi(window)
+from rentalcar.gui import main
 
 
-window.show()
-sys.exit(app.exec_())
+main()

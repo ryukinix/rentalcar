@@ -6,3 +6,5 @@
 #   Copyright © Manoel Vilela
 #
 #
+
+from rentalcar.forms.MainWindow import Ui_MainWindow
