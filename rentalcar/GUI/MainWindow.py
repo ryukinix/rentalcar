@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file 'design/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(816, 639)
+        MainWindow.resize(812, 651)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -21,18 +20,6 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.atrasosText = QtWidgets.QLabel(self.gridLayoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Consolas")
-        font.setPointSize(12)
-        self.atrasosText.setFont(font)
-        self.atrasosText.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.atrasosText.setTextFormat(QtCore.Qt.AutoText)
-        self.atrasosText.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.atrasosText.setWordWrap(False)
-        self.atrasosText.setOpenExternalLinks(False)
-        self.atrasosText.setObjectName("atrasosText")
-        self.gridLayout.addWidget(self.atrasosText, 4, 1, 1, 1)
         self.atrasosLabel = QtWidgets.QLabel(self.gridLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("Consolas")
@@ -81,30 +68,6 @@ class Ui_MainWindow(object):
         self.dataLabel.setOpenExternalLinks(False)
         self.dataLabel.setObjectName("dataLabel")
         self.gridLayout.addWidget(self.dataLabel, 1, 0, 1, 1)
-        self.alugadosText = QtWidgets.QLabel(self.gridLayoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Consolas")
-        font.setPointSize(12)
-        self.alugadosText.setFont(font)
-        self.alugadosText.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.alugadosText.setTextFormat(QtCore.Qt.AutoText)
-        self.alugadosText.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.alugadosText.setWordWrap(False)
-        self.alugadosText.setOpenExternalLinks(False)
-        self.alugadosText.setObjectName("alugadosText")
-        self.gridLayout.addWidget(self.alugadosText, 3, 1, 1, 1)
-        self.cadastradosText = QtWidgets.QLabel(self.gridLayoutWidget)
-        font = QtGui.QFont()
-        font.setFamily("Consolas")
-        font.setPointSize(12)
-        self.cadastradosText.setFont(font)
-        self.cadastradosText.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.cadastradosText.setTextFormat(QtCore.Qt.AutoText)
-        self.cadastradosText.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.cadastradosText.setWordWrap(False)
-        self.cadastradosText.setOpenExternalLinks(False)
-        self.cadastradosText.setObjectName("cadastradosText")
-        self.gridLayout.addWidget(self.cadastradosText, 2, 1, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.dataText = QtWidgets.QLabel(self.gridLayoutWidget)
@@ -123,9 +86,18 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout_2.addWidget(self.pushButton)
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 1, 1, 1)
+        self.cadastradosLCD = QtWidgets.QLCDNumber(self.gridLayoutWidget)
+        self.cadastradosLCD.setObjectName("cadastradosLCD")
+        self.gridLayout.addWidget(self.cadastradosLCD, 2, 1, 1, 1)
+        self.alugadosLCD = QtWidgets.QLCDNumber(self.gridLayoutWidget)
+        self.alugadosLCD.setObjectName("alugadosLCD")
+        self.gridLayout.addWidget(self.alugadosLCD, 3, 1, 1, 1)
+        self.atrasosLCD = QtWidgets.QLCDNumber(self.gridLayoutWidget)
+        self.atrasosLCD.setObjectName("atrasosLCD")
+        self.gridLayout.addWidget(self.atrasosLCD, 4, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 816, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 812, 21))
         self.menubar.setObjectName("menubar")
         self.menuPrincipal = QtWidgets.QMenu(self.menubar)
         self.menuPrincipal.setObjectName("menuPrincipal")
@@ -175,13 +147,10 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "RentalCar"))
-        self.atrasosText.setText(_translate("MainWindow", "hh"))
         self.atrasosLabel.setText(_translate("MainWindow", "Quantidade de atrasos: "))
         self.cadastradosLabel.setText(_translate("MainWindow", "Quantidade de veículos cadastrados: "))
         self.alugadosLabel.setText(_translate("MainWindow", "Quantidade de veículos alugados: "))
         self.dataLabel.setText(_translate("MainWindow", "Data Atual:"))
-        self.alugadosText.setText(_translate("MainWindow", "yy"))
-        self.cadastradosText.setText(_translate("MainWindow", "xx"))
         self.dataText.setText(_translate("MainWindow", "dd/mm/aaaa"))
         self.pushButton.setText(_translate("MainWindow", "Avançar Data"))
         self.menuPrincipal.setTitle(_translate("MainWindow", "Principal"))
@@ -196,3 +165,4 @@ class Ui_MainWindow(object):
         self.actionSobre.setText(_translate("MainWindow", "Sobre"))
         self.actionSair.setText(_translate("MainWindow", "Sair"))
         self.actionTela_Inicial.setText(_translate("MainWindow", "Tela Inicial"))
+
