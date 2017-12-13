@@ -152,13 +152,12 @@ class RentVehicle(Vehicle):
         del self.clients[client]
 
 
-    @property
     def total_to_pay(self, client):
         "Valor a ser pago baseado na data atual e a data alugada"
         rent_date_start, rent_days = self.clients[client]
-        total_days_rent = (rent_date_start - date)
-        total_value = min(total_days_rent, rent_days) * daily
+        total_days_rent = (date - rent_date_start).days
+        total_value = min(total_days_rent, rent_days) * self.daily
         # multa
         if total_days_rent > rent_days:
-            total_value += (total_days_rent - rent_days)*daily*2
+            total_value += (total_days_rent - rent_days)*self.daily * 2
         return total_value

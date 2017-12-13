@@ -7,16 +7,22 @@
 #
 #
 
+# stdlib
 import sys
 import os
+from datetime import datetime
+
+# Qt
 from PyQt5 import QtWidgets
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import (QDate, QDateTime, QRegExp,
                           QSortFilterProxyModel, Qt, QTime)
 from PyQt5.QtGui import QStandardItemModel
+
+# self-package
 from rentalcar import forms
 from rentalcar import models
-from datetime import datetime
-
 
 
 class Add(QtWidgets.QWidget):
@@ -43,7 +49,8 @@ class Add(QtWidgets.QWidget):
             self.clear_input()
 
         except Exception as e:
-            print("Deu merda, corrige ai. {}".format(e)) # substituir dialog
+            msg = "Deu merda, corrige ai. {}".format(e)
+            QMessageBox.warning(self, 'Erro', msg, QMessageBox.Close, QMessageBox.Close)
 
 
 
@@ -177,31 +184,48 @@ class Rent(QtWidgets.QWidget):
         client = self.ui.locatarioInput.text()
         date_start = self.ui.dataInput.text()
         days = self.ui.prazoInput.text()
+        msg = ""
         try:
             code = int(code)
             days = int(days)
             vehicle = models.Vehicle.search(code)
             date = datetime.strptime(date_start, "%d/%m/%Y")
-            if vehicle:
+            diff_days = (date  - models.date).days
+            if diff_days > 30 or diff_days < -1:
+                QMessageBox.information(self, 'Erro',
+                                        "Data de locação deve ser de 1 a 30 dias.",
+                                        QMessageBox.Close, QMessageBox.Close)
+
+            elif vehicle:
                 rented = vehicle.search_rent(date, days)
                 if not rented:
                     vehicle.rent(client, date,  int(days))
-                    print("Veiculo alugado!")
+                    msg = "Veículo {} {} alugado para {} com sucesso!".format(vehicle.brand,
+                                                                              vehicle.model,
+                                                                              client)
+
                     self.parent.focus()
                 else:
-                    print("Rented by: {}".format(rented))
+                    msg = "Veículo já está reservado para: {}".format(rented)
+                    print()
             else:
-                print("Veículo não encontrado.")
+                msg = "Veículo não encontrado."
 
         except Exception as e:
-            print("Merda: {}".format(e))
+            msg = "Merda, ajuda aí: {}".format(e)
+
+        if msg:
+            QMessageBox.information(self, 'Info', msg, QMessageBox.Close, QMessageBox.Close)
 
     def cancelar_button(self):
         self.parent.focus()
 
 
     def update(self):
-        pass
+        self.ui.codigoInput.clear()
+        self.ui.locatarioInput.clear()
+        year, month, day = models.date.year, models.date.month, models.date.day
+        self.ui.dataInput.setDateTime(QtCore.QDateTime(QtCore.QDate(year, month, day), QtCore.QTime(0, 0, 0)))
 
 class About(QtWidgets.QDialog):
     def __init__(self, parent):
@@ -226,7 +250,7 @@ class Free(QtWidgets.QWidget):
 
     def setupUi(self):
         self.ui.sairButton.clicked.connect(self.sair_button)
-        self.ui.liberarButton.clicked.connect(self.excluir_button)
+        self.ui.liberarButton.clicked.connect(self.liberar_button)
         self.model = QStandardItemModel(0, 5, self.parent)
         self.model.setHeaderData(self.CODE, Qt.Horizontal, "Código")
         self.model.setHeaderData(self.MODELO, Qt.Horizontal, "Modelo")
@@ -235,7 +259,7 @@ class Free(QtWidgets.QWidget):
         self.model.setHeaderData(self.PRAZO, Qt.Horizontal, "Dias")
         self.ui.treeView.setModel(self.model)
 
-    def excluir_button(self):
+    def liberar_button(self):
         selected = self.ui.treeView.selectedIndexes()
         if len(selected) > 0:
             index = self.ui.treeView.selectedIndexes()[0]
@@ -245,6 +269,9 @@ class Free(QtWidgets.QWidget):
             code = self.model.data(index_code)
             client = self.model.data(index_client)
             v = models.RentVehicle.search(code)
+            if v.alugado:
+                msg = "Valor a ser pago equivalente a: R$ {}".format(v.total_to_pay(client))
+                QMessageBox.information(self, 'Info', msg, QMessageBox.Close, QMessageBox.Close)
             v.free(client)
         self.fetch()
 
