@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>297</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>0</y>
       <width>385</width>
-      <height>251</height>
+      <height>281</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -57,11 +57,8 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLCDNumber" name="atrasosLCD"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="atrasosLabel">
+       <item row="2" column="0">
+        <widget class="QLabel" name="alugadosLabel">
          <property name="font">
           <font>
            <family>Monospac821 BT</family>
@@ -72,7 +69,7 @@
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="text">
-          <string>Atrasos:</string>
+          <string>Veículos alugados:</string>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
@@ -87,6 +84,40 @@
           <bool>false</bool>
          </property>
         </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLCDNumber" name="atrasosLCD"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="cadastradosLabel">
+         <property name="font">
+          <font>
+           <family>Monospac821 BT</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Veículos cadastrados:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLCDNumber" name="alugadosLCD"/>
        </item>
        <item row="0" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -127,67 +158,36 @@
          </item>
         </layout>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="atrasosLabel">
+         <property name="font">
+          <font>
+           <family>Monospac821 BT</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Atrasos:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <widget class="QLCDNumber" name="cadastradosLCD"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="cadastradosLabel">
-         <property name="font">
-          <font>
-           <family>Monospac821 BT</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Veículos cadastrados:</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::AutoText</enum>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLCDNumber" name="alugadosLCD"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="alugadosLabel">
-         <property name="font">
-          <font>
-           <family>Monospac821 BT</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Veículos alugados:</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::AutoText</enum>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>false</bool>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>
@@ -208,7 +208,7 @@
      <string>Principal</string>
     </property>
     <addaction name="actionTela_Inicial"/>
-    <addaction name="actionPrincipal"/>
+    <addaction name="actionConsultar"/>
     <addaction name="actionAdicionar"/>
     <addaction name="actionExcluir"/>
     <addaction name="separator"/>
@@ -232,7 +232,7 @@
    <addaction name="menuAjuda"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionPrincipal">
+  <action name="actionConsultar">
    <property name="text">
     <string>Consultar</string>
    </property>
