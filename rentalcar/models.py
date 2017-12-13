@@ -9,6 +9,7 @@
 
 from datetime import datetime
 from datetime import timedelta
+from abc import ABCMeta
 
 
 # global variables of this module
@@ -31,7 +32,7 @@ def overlap_dates(start1, end1, start2, end2):
     return True if overlap > 0 else False
 
 
-class Vehicle(object):
+class Vehicle(metaclass=ABCMeta):
     """Classe que representa um veículo
 
     :brand: marca do veículo
@@ -92,8 +93,8 @@ class RentVehicle(Vehicle):
         self.clients[client] = (rent_date_start, rent_days)
 
 
-    def search_rent(self, rent_date_start , rent_days):
-        "Procura por possíveis clientes alugando este carro"
+    def search_rent(self, rent_date_start, rent_days):
+        "Procura por possíveis clientes alugando/reservado este carro"
         rent = []
         rent_date_end = rent_date_start + timedelta(days=rent_days)
         for client, (date_start, days) in self.clients.items():
@@ -104,15 +105,47 @@ class RentVehicle(Vehicle):
 
     @property
     def status(self):
-        return "Not implemented"
+        "Retorna o estado do veículo em relação a disponibilidade de locação"
+        if len(self.clients) == 0:
+            return "DISPONÍVEL"
+        elif self.atrasos > 0:
+            return "ATRASADO"
+        elif self.alugado:
+            return "ALUGADO"
+        else:
+            return "RESERVADO"
+
+    @property
+    def alugado(self):
+        for date_rent, days in self.clients.values():
+            if date > date_rent:
+                return True
+        return False
+
 
     @staticmethod
     def get_alugados():
-        return [] # a ser implementado
+        "Devolve os objetos que estão alugados ou atrasados"
+        vehicles = []
+        for v in Vehicle.objects:
+            if v.status in ("ALUGADOS", "ATRASADOS"):
+                vehicles.append(v)
+        return vehicles
 
     @staticmethod
     def get_atrasos():
-        return 0 # a ser implementado
+        "Total de atrasos de todos os objetos"
+        return sum(v.atrasos for v in Vehicle.objects)
+
+    @property
+    def atrasos(self):
+        "Quantidade de atrasos em horas"
+        for date_rent, days in self.clients.values():
+            max_date = date_rent + timedelta(days=days)
+            if date > max_date:
+                return (date - max_date).days
+
+        return 0
 
     def free(self, client):
         "Libera o carro de aluguel ou reserva"

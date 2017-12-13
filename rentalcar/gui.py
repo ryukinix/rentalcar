@@ -328,12 +328,14 @@ class Main(QtWidgets.QMainWindow):
 
     def update_date(self):
         self.ui.dataText.setText(models.increase_day().strftime(models.dateformat))
+        self.update()
 
 
     def update(self):
         self.ui.cadastradosLCD.display(len(models.Vehicle.objects))
         self.ui.alugadosLCD.display(len(models.RentVehicle.get_alugados()))
         self.ui.atrasosLCD.display(models.RentVehicle.get_atrasos())
+
 
 def create():
     "Cria a aplicação e a janela"
