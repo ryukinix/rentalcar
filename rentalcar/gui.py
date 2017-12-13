@@ -145,7 +145,9 @@ class Fetch(QtWidgets.QWidget):
             index = self.model.index(item.row(), self.CODE)
             code = self.model.data(index)
             v = models.RentVehicle.search(code)
-            print(v)
+            msg = "Detalhes: Marca: {} | Ano: {} | Diária: R$ {}".format(v.brand, v.year, v.daily)
+            QMessageBox.information(self, 'Carrinho', msg, QMessageBox.Close, QMessageBox.Close)
+
 
     def sair_button(self):
         self.parent.focus()
