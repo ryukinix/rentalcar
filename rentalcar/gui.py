@@ -327,7 +327,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.avancarDataButton.clicked.connect(self.update_date)
 
     def update_date(self):
-        self.ui.dataText.setText(models.increase_day().strftime(modelos.dateformat))
+        self.ui.dataText.setText(models.increase_day().strftime(models.dateformat))
 
 
     def update(self):
