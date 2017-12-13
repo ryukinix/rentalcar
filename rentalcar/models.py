@@ -44,7 +44,7 @@ class Vehicle(object):
 
     def __init__(self, brand, model, year, daily):
         self.brand = brand
-        self.modelo = model
+        self.model = model
         self.year = year
         self.daily = daily
         self.code = Vehicle.code
@@ -101,6 +101,9 @@ class RentVehicle(Vehicle):
                 rent.append((client, date_start, date_end))
         return rent
 
+    @property
+    def status(self):
+        return "Not implemented"
 
     @staticmethod
     def get_alugados():

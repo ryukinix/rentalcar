@@ -10,6 +10,9 @@
 import sys
 import os
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import (QDate, QDateTime, QRegExp,
+                          QSortFilterProxyModel, Qt, QTime)
+from PyQt5.QtGui import QStandardItemModel
 from rentalcar import forms
 from rentalcar import models
 from datetime import datetime
@@ -71,14 +74,45 @@ class Delete(QtWidgets.QWidget):
 
 
 class Fetch(QtWidgets.QWidget):
+
+    CODE, MODELO, STATUS = range(3)
+
     def __init__(self, parent):
         super().__init__()
         self.ui = forms.Ui_FetchWidget()
         self.ui.setupUi(self)
         self.parent = parent
+        self.setupUi()
+
+    def setupUi(self):
+        self.ui.sairButton.clicked.connect(self.sair_button)
+        self.ui.detalhesButton.clicked.connect(self.detalhes_button)
+        self.model = QStandardItemModel(0, 3, self)
+        self.model.setHeaderData(self.CODE, Qt.Horizontal, "Código")
+        self.model.setHeaderData(self.MODELO, Qt.Horizontal, "Modelo")
+        self.model.setHeaderData(self.STATUS, Qt.Horizontal, "Status")
+        self.ui.treeView.setModel(self.model)
+
+    def detalhes_button(self):
+        pass
+
+    def sair_button(self):
+        self.parent.focus()
 
     def update(self):
-        pass
+        self.fetch()
+
+    def fetch(self):
+        #self.model.clear()
+        self.model.insertRow(0)
+        for v in models.RentVehicle.objects:
+            code = v.code
+            status = v.status
+            model = v.model
+            self.model.setData(model.index(0, self.CODE), code)
+            self.model.setData(model.index(0, self.MODELO), model)
+            self.model.setData(model.index(0, self.STATUS), status)
+
 
 
 class Rent(QtWidgets.QWidget):
@@ -172,8 +206,10 @@ class Main(QtWidgets.QMainWindow):
         self.setupUi()
 
     def widget_changer(self, widget):
-        widget.update()
-        return lambda _: self.central_widget.setCurrentWidget(widget)
+        def update(_):
+            widget.update()
+            self.central_widget.setCurrentWidget(widget)
+        return update
 
     def focus(self):
         self.central_widget.setCurrentWidget(self.tela_inicial_widget)
