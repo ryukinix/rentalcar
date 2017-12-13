@@ -22,7 +22,9 @@ sistemas operacionais Windows e Linux, testados nos sistemas Windows
 7, Windows 10 e a distribuição ArchLinux.  A pré-compilação é feita
 através do software pyinstaller que embarca todas as dependências,
 bibliotecas dinâmicas e a máquina virtual de Python num único
-executável para simplificar todo o processo de distribuir o software
+executável para simplificar todo o processo de distribuir o software.
+
+Para baixar acesse: [release](https://github.com/ryukinix/rentalcar/releases/tag/v1.0)
 
 ## Compilar manualmente
 
