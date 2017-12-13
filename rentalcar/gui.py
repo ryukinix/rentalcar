@@ -56,7 +56,6 @@ class About(QtWidgets.QDialog):
         self.parent = parent
 
 
-
 class Free(QtWidgets.QWidget):
     def __init__(self, parent):
         super().__init__()
@@ -108,6 +107,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionConsultar.triggered.connect(self.widget_changer(self.fetch_widget))
         self.ui.actionTela_Inicial.triggered.connect(self.widget_changer(self.tela_inicial_widget))
         self.ui.actionSair.triggered.connect(self.close)
+        self.ui.actionSobre.triggered.connect(lambda _: self.about_dialog.show())
         self.ui.dataText.setText(models.date.strftime(self.dateformat))
         self.ui.avancarDataButton.clicked.connect(self.update_date)
 
