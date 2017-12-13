@@ -161,3 +161,25 @@ class RentVehicle(Vehicle):
         if total_days_rent > rent_days:
             total_value += (total_days_rent - rent_days)*self.daily * 2
         return total_value
+
+    @staticmethod
+    def salvar_tudo():
+        "Salva todas as informações em arquivos CSV"
+        vehicles = [["code", "brand", "model", "daily", "status"]]
+        clients = [["code", "brand", "model", "daily", "client", "start_date", "days"]]
+        for v in Vehicle.objects:
+            shared_data  = [v.code, v.brand, v.model, v.daily]
+            vehicles.append( shared_data + [v.status])
+            for c, (start_date, days) in v.clients.items():
+                clients.append(shared_data + [c, start_date.strftime(dateformat), days])
+
+        map_str = lambda x: [list(map(str, row)) for row in x]
+        map_join = lambda x: (list(map(",".join, x)))
+        vehicles = map_join(map_str(vehicles))
+        clients = map_join(map_str(clients))
+
+
+        with open("clients.csv", "w") as f:
+            f.writelines([x + "\n" for x in clients])
+        with open("vehicles.csv", "w") as f:
+            f.writelines([x + "\n" for x in vehicles])

@@ -352,6 +352,7 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionTela_Inicial.triggered.connect(self.widget_changer(self.tela_inicial_widget))
         self.ui.actionSair.triggered.connect(self.close)
         self.ui.actionSobre.triggered.connect(lambda _: self.about_dialog.show())
+        self.ui.actionSalvar.triggered.connect(lambda _: models.RentVehicle.salvar_tudo())
         self.ui.dataText.setText(models.date.strftime(models.dateformat))
         self.ui.avancarDataButton.clicked.connect(self.update_date)
 
