@@ -128,7 +128,7 @@ class RentVehicle(Vehicle):
         "Devolve os objetos que estão alugados ou atrasados"
         vehicles = []
         for v in Vehicle.objects:
-            if v.status in ("ALUGADOS", "ATRASADOS"):
+            if v.status in ("ALUGADO", "ATRASADO"):
                 vehicles.append(v)
         return vehicles
 
