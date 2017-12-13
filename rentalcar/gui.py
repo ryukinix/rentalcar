@@ -16,9 +16,7 @@ from PyQt5.QtGui import QStandardItemModel
 from rentalcar import forms
 from rentalcar import models
 from datetime import datetime
-import decorating.stream
 
-sys.stdout = decorating.stream.Unbuffered(sys.stdout)
 
 class Add(QtWidgets.QWidget):
     def __init__(self, parent):
