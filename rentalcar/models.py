@@ -47,9 +47,13 @@ class Vehicle(object):
         self.modelo = model
         self.year = year
         self.daily = daily
-        self.code = Vehicle.id
+        self.code = Vehicle.code
         Vehicle.code += 1
         Vehicle.objects.append(self)
+        print(self)
+
+    def __repr__(self):
+        return "<{}>".format(tuple('{}:{}'.format(k, v) for k,v in vars(self).items()))
 
     @staticmethod
     def search(code):
@@ -74,7 +78,7 @@ class RentVehicle(Vehicle):
     """
 
     def __init__(self, brand, model, year, daily):
-        super().__init__()
+        super().__init__(brand, model, year, daily)
         self.clients = {}
 
     def rent(self, client, rent_date_start, rent_days):
@@ -96,6 +100,15 @@ class RentVehicle(Vehicle):
             if overlap_dates(rent_date_start, rent_date_end, date_start, date_end):
                 rent.append((client, date_start, date_end))
         return rent
+
+
+    @staticmethod
+    def get_alugados():
+        return [] # a ser implementado
+
+    @staticmethod
+    def get_atrasos():
+        return 0 # a ser implementado
 
     def free(self, client):
         "Libera o carro de aluguel ou reserva"
