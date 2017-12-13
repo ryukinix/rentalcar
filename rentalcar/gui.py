@@ -215,19 +215,67 @@ class About(QtWidgets.QDialog):
 
 
 class Free(QtWidgets.QWidget):
+    CODE, MODELO, LOCATARIO, DATA, PRAZO = range(5)
+
     def __init__(self, parent):
         super().__init__()
         self.ui = forms.Ui_FreeWidget()
         self.ui.setupUi(self)
         self.parent = parent
+        self.setupUi()
+
+    def setupUi(self):
+        self.ui.sairButton.clicked.connect(self.sair_button)
+        self.ui.liberarButton.clicked.connect(self.excluir_button)
+        self.model = QStandardItemModel(0, 5, self.parent)
+        self.model.setHeaderData(self.CODE, Qt.Horizontal, "Código")
+        self.model.setHeaderData(self.MODELO, Qt.Horizontal, "Modelo")
+        self.model.setHeaderData(self.LOCATARIO, Qt.Horizontal, "Locatário")
+        self.model.setHeaderData(self.DATA, Qt.Horizontal, "Data")
+        self.model.setHeaderData(self.PRAZO, Qt.Horizontal, "Dias")
+        self.ui.treeView.setModel(self.model)
+
+    def excluir_button(self):
+        selected = self.ui.treeView.selectedIndexes()
+        if len(selected) > 0:
+            index = self.ui.treeView.selectedIndexes()[0]
+            item = index.model().itemFromIndex(index)
+            index_code = self.model.index(item.row(), self.CODE)
+            index_client = self.model.index(item.row(), self.LOCATARIO)
+            code = self.model.data(index_code)
+            client = self.model.data(index_client)
+            v = models.RentVehicle.search(code)
+            v.free(client)
+        self.fetch()
+
+    def sair_button(self):
+        self.parent.focus()
 
     def update(self):
-        pass
+        self.fetch()
+
+    def fetch(self):
+        self.model.removeRows(0, self.model.rowCount())
+        for v in (x for x in models.RentVehicle.objects if len(x.clients) > 0):
+            code = v.code
+            model = v.model
+            brand = v.brand
+            for c in v.clients.keys():
+                data, days = v.clients[c]
+                self.model.insertRow(0)
+                self.model.setData(self.model.index(0, self.CODE), code)
+                self.model.setData(self.model.index(0, self.MODELO), model)
+                self.model.setData(self.model.index(0, self.LOCATARIO), c)
+                self.model.setData(self.model.index(0, self.DATA), data.strftime(models.dateformat))
+                self.model.setData(self.model.index(0, self.PRAZO), days)
+
+
+
 
 
 class Main(QtWidgets.QMainWindow):
     "Janela principal contendo todos os menus e informações"
-    dateformat = "%d/%m/%Y"
+
     def __init__(self):
         super().__init__()
         self.ui = forms.Ui_MainWindow()
@@ -275,11 +323,11 @@ class Main(QtWidgets.QMainWindow):
         self.ui.actionTela_Inicial.triggered.connect(self.widget_changer(self.tela_inicial_widget))
         self.ui.actionSair.triggered.connect(self.close)
         self.ui.actionSobre.triggered.connect(lambda _: self.about_dialog.show())
-        self.ui.dataText.setText(models.date.strftime(self.dateformat))
+        self.ui.dataText.setText(models.date.strftime(models.dateformat))
         self.ui.avancarDataButton.clicked.connect(self.update_date)
 
     def update_date(self):
-        self.ui.dataText.setText(models.increase_day().strftime(self.dateformat))
+        self.ui.dataText.setText(models.increase_day().strftime(modelos.dateformat))
 
 
     def update(self):

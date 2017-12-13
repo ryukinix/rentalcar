@@ -13,6 +13,7 @@ from datetime import timedelta
 
 # global variables of this module
 date = datetime.now()
+dateformat = "%d/%m/%Y"
 
 def increase_day():
     "Aumenta o dia global da aplicação em 1"
@@ -115,7 +116,7 @@ class RentVehicle(Vehicle):
 
     def free(self, client):
         "Libera o carro de aluguel ou reserva"
-        del self.clients[renter_name]
+        del self.clients[client]
 
 
     @property
