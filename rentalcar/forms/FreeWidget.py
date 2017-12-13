@@ -29,9 +29,10 @@ class Ui_FreeWidget(object):
         self.sairButton = QtWidgets.QPushButton(FreeWidget)
         self.sairButton.setObjectName("sairButton")
         self.horizontalLayout_4.addWidget(self.sairButton)
-        self.detalhesButton = QtWidgets.QPushButton(FreeWidget)
-        self.detalhesButton.setObjectName("detalhesButton")
-        self.horizontalLayout_4.addWidget(self.detalhesButton)
+        self.liberarButton = QtWidgets.QPushButton(FreeWidget)
+        self.liberarButton.setAutoDefault(True)
+        self.liberarButton.setObjectName("liberarButton")
+        self.horizontalLayout_4.addWidget(self.liberarButton)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
@@ -43,5 +44,5 @@ class Ui_FreeWidget(object):
         FreeWidget.setWindowTitle(_translate("FreeWidget", "Form"))
         self.treeView.setToolTip(_translate("FreeWidget", "Carros cadastrados"))
         self.sairButton.setText(_translate("FreeWidget", "Sair"))
-        self.detalhesButton.setText(_translate("FreeWidget", "Liberar"))
+        self.liberarButton.setText(_translate("FreeWidget", "Liberar/Devolver"))
 

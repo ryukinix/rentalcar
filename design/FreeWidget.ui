@@ -48,9 +48,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="detalhesButton">
+        <widget class="QPushButton" name="liberarButton">
          <property name="text">
-          <string>Liberar</string>
+          <string>Liberar/Devolver</string>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

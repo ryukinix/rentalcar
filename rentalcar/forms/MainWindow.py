@@ -80,6 +80,7 @@ class Ui_MainWindow(object):
         self.dataText.setObjectName("dataText")
         self.horizontalLayout_2.addWidget(self.dataText)
         self.avancarDataButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.avancarDataButton.setAutoDefault(True)
         self.avancarDataButton.setObjectName("avancarDataButton")
         self.horizontalLayout_2.addWidget(self.avancarDataButton)
         self.gridLayout.addLayout(self.horizontalLayout_2, 0, 1, 1, 1)

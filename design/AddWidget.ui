@@ -164,6 +164,9 @@
       <property name="text">
        <string>Ok</string>
       </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="4" column="1">
@@ -183,6 +186,9 @@
      <widget class="QPushButton" name="cancelarButton">
       <property name="text">
        <string>Cancelar</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

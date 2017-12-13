@@ -154,6 +154,9 @@
            <property name="text">
             <string>Avançar Data</string>
            </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
