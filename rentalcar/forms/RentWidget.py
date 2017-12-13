@@ -77,6 +77,11 @@ class Ui_RentWidget(object):
 
         self.retranslateUi(RentWidget)
         QtCore.QMetaObject.connectSlotsByName(RentWidget)
+        RentWidget.setTabOrder(self.codigoInput, self.locatarioInput)
+        RentWidget.setTabOrder(self.locatarioInput, self.dataInput)
+        RentWidget.setTabOrder(self.dataInput, self.prazoInput)
+        RentWidget.setTabOrder(self.prazoInput, self.okButton)
+        RentWidget.setTabOrder(self.okButton, self.cancelarButton)
 
     def retranslateUi(self, RentWidget):
         _translate = QtCore.QCoreApplication.translate

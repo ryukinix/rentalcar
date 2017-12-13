@@ -209,6 +209,14 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>codigoInput</tabstop>
+  <tabstop>locatarioInput</tabstop>
+  <tabstop>dataInput</tabstop>
+  <tabstop>prazoInput</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>cancelarButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
