@@ -191,8 +191,14 @@ class Rent(QtWidgets.QWidget):
             code = int(code)
             days = int(days)
             vehicle = models.Vehicle.search(code)
-            date = datetime.strptime(date_start, "%d/%m/%Y")
-            diff_days = (date  - models.date).days
+            dates = date_start.split('/')
+            if int(dates[2]) < 30:
+                dates[2] = '20' + dates[2]
+            else:
+                dates[2] = '19' + dates[2]
+            date_start = r'/'.join(dates)
+            date = datetime.strptime(date_start, models.dateformat)
+            diff_days = (date - models.date).days
             if diff_days > 30 or diff_days < -1:
                 QMessageBox.information(self, 'Erro',
                                         "Data de locação deve ser de 1 a 30 dias.",
@@ -228,6 +234,7 @@ class Rent(QtWidgets.QWidget):
         self.ui.locatarioInput.clear()
         year, month, day = models.date.year, models.date.month, models.date.day
         self.ui.dataInput.setDateTime(QtCore.QDateTime(QtCore.QDate(year, month, day), QtCore.QTime(0, 0, 0)))
+
 
 class About(QtWidgets.QDialog):
     def __init__(self, parent):

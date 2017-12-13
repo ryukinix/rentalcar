@@ -14,7 +14,7 @@ from abc import ABCMeta
 
 # global variables of this module
 date = datetime.now()
-dateformat = "%d/%m/%Y"
+dateformat = "%x"
 
 def increase_day():
     "Aumenta o dia global da aplicação em 1"
